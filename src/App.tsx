@@ -62,7 +62,9 @@ export function App() {
           onChange={async (newValue) => {
             if (newValue?.id) {
               await loadTransactionsByEmployee(newValue.id)
+              return
             }
+            await loadAllTransactions()
           }}
         />
 
@@ -71,7 +73,7 @@ export function App() {
         <div className="RampGrid">
           <Transactions transactions={transactions} />
 
-          {transactions !== null && (
+          {paginatedTransactions?.nextPage ? (
             <button
               className="RampButton"
               disabled={paginatedTransactionsUtils.loading}
@@ -81,7 +83,7 @@ export function App() {
             >
               View More
             </button>
-          )}
+          ) : null}
         </div>
       </main>
     </Fragment>
